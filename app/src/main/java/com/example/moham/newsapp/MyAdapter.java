@@ -55,10 +55,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
         public void bind(News news) {
+            StringBuilder authors = null;
+            if(news.getAuthors() != null){
+                authors = new StringBuilder("By ");
+            for(int i=0; i<news.getAuthors().length;i++){
+                authors.append(news.getAuthors()[i]);
+
+                if(i+1 != news.getAuthors().length)
+                    authors.append(", ");
+                }
+            }
             title.setText(news.getTitle());
             publicationDate.setText(news.getPublicationDate());
             sectionName.setText(news.getSectionName());
-            author.setText(news.getAuthor());
+
+            if(authors != null)
+            author.setText(authors.toString());
+
             webURl = news.getWebUrl();
         }
 

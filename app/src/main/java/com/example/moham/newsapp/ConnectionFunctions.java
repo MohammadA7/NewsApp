@@ -111,15 +111,18 @@ public class ConnectionFunctions {
                 publicationDate = publicationDate.substring(0, 10);
                 String title = currentObject.getString("webTitle");
                 String webUrl = currentObject.getString("webUrl");
-                String author = "";
-                int stringSpliter = title.indexOf("|");
+                String authors[] = null;
 
-                if(stringSpliter != -1) {
-                    author = "By " + title.substring(stringSpliter+1, title.length()).trim();
-                    title = title.substring(0, stringSpliter).trim();
+                if(currentObject.has("tags")){
+                    JSONArray tags = currentObject.getJSONArray("tags");
+                    JSONObject currentTag;
+                    authors = new String[tags.length()];
+                    for(int j=0;j<tags.length();j++) {
+                        currentTag = tags.getJSONObject(j);
+                        authors[j] = currentTag.getString("webTitle");
+                    }
                 }
-                News current = new News(title,webUrl, sectionName, author, publicationDate);
-
+                News current = new News(title,webUrl, sectionName, authors, publicationDate);
                 news.add(current);
             }
 

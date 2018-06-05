@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         builder.appendQueryParameter("section", category);
         builder.appendQueryParameter("from-date", finalDate);
         builder.appendQueryParameter("api-key",getString(R.string.api_key));
+        builder.appendQueryParameter("show-tags","contributor");
 
 
         return new AsyncLoader(this, builder.toString());
