@@ -2,4 +2,26 @@
     <string name="app_name">News App</string>
     <string name="no_news_massage">No News Available :(</string>
     <string name="no_internet_massage">No Internet Available :(</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">News Settings</string>
+    
+    <string name="settings_news_category_label">News Category</string>
+    <string name="settings_news_category_default">sport</string>
+    <string name="settings_news_category_key">news_category</string>
+
+    <string name="settings_news_category_sport_value">sport</string>
+    <string name="settings_news_category_sport_label">Sport</string>
+
+    <string name="settings_news_category_music_value">music</string>
+    <string name="settings_news_category_music_label">Music</string>
+
+    <string name="settings_news_category_money_value">money</string>
+    <string name="settings_news_category_money_label">Money</string>
+
+    <string name="settings_news_date_label">News Date</string>
+    <string name="settings_news_date_default">01/01/2018</string>
+    <string name="settings_news_date_key">news_date</string>
+
+    <string name="api_key">c1db84b5-3056-4332-8372-09cfac9f5b6b</string>
 </resources>

@@ -6,8 +6,6 @@ public class News {
     private String sectionName;
     private String author;
     private String publicationDate;
-    private boolean hasAuthor;
-    private boolean hasPublicationDate;
 
     public News(String title, String webUrl, String sectionName, String author, String publicationDate) {
         this.title = title;
@@ -15,16 +13,6 @@ public class News {
         this.sectionName = sectionName;
         this.author = author;
         this.publicationDate = publicationDate;
-        this.hasAuthor = !author.equals("");
-        this.hasPublicationDate = !publicationDate.equals("");
-    }
-
-    public boolean isHasPublicationDate() {
-        return hasPublicationDate;
-    }
-
-    public boolean isHasAuthor() {
-        return hasAuthor;
     }
 
     public String getTitle() {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_category_labels">
+        <item>@string/settings_news_category_music_label</item>
+        <item>@string/settings_news_category_money_label</item>
+        <item>@string/settings_news_category_sport_label</item>
+    </string-array>
+    <string-array name="settings_category_values">
+        <item>@string/settings_news_category_music_value</item>
+        <item>@string/settings_news_category_money_value</item>
+        <item>@string/settings_news_category_sport_value</item>
+    </string-array>
+</resources>

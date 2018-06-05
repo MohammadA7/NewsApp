@@ -1,8 +1,12 @@
 package com.example.moham.newsapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.Loader;
@@ -12,18 +16,22 @@ import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
     RecyclerView recyclerView;
     MyAdapter adapter;
     TextView massage;
+    final String GUARDIAN_API_URL = "https://content.guardianapis.com/search";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<News>> onCreateLoader(int id, @Nullable Bundle args) {
         Log.d("onCreateLoader", " onCreateLoader");
-        return new AsyncLoader(this);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String category = sharedPreferences.getString(getString(R.string.settings_news_category_key), getString(R.string.settings_news_category_default));
+        String stringDate = sharedPreferences.getString(getString(R.string.settings_news_date_key), getString(R.string.settings_news_date_default));
+        Log.d("stringDate ", stringDate);
+        SimpleDateFormat format = new SimpleDateFormat(
+                "dd/MM/yyyy");
+        Date myDate = null;
+        try {
+            myDate = format.parse(stringDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format.applyPattern("yyyy-MM-dd");
+        String finalDate = format.format(myDate);
+
+        Log.d("finalDate", finalDate);
+
+        Uri baseUri = Uri.parse(GUARDIAN_API_URL);
+
+        Uri.Builder builder = baseUri.buildUpon();
+
+        builder.appendQueryParameter("section", category);
+        builder.appendQueryParameter("from-date", finalDate);
+        builder.appendQueryParameter("api-key",getString(R.string.api_key));
+
+
+        return new AsyncLoader(this, builder.toString());
     }
 
     @Override
@@ -76,4 +113,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.d("onLoaderReset", " onLoaderReset");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

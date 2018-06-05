@@ -3,19 +3,23 @@ package com.example.moham.newsapp;
 import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
+
 import java.util.List;
 
 public class AsyncLoader extends AsyncTaskLoader<List<News>> {
-    public AsyncLoader(Context context) {
+    String URL;
+    public AsyncLoader(Context context, String URL) {
         super(context);
+        this.URL = URL;
     }
 
     @Override
     public List<News> loadInBackground() {
         Log.d("loadInBackground", " loadInBackground");
-        List<News> fetchedData = null;
+        List<News> fetchedData;
 
-        fetchedData = ConnectionFunctions.fetchNews("https://content.guardianapis.com/search?api-key=c1db84b5-3056-4332-8372-09cfac9f5b6b");
+
+        fetchedData = ConnectionFunctions.fetchNews(URL);
 
         return fetchedData;
     }
